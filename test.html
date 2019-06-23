@@ -1,5 +1,6 @@
-<script src="thread.js"></script>
+<script src="index.js"></script>
 <script>
+
 
 
   function fib(n){
@@ -9,67 +10,34 @@
     return fib(n-1)+fib(n-2);
   }
 
+  var n=100;
+  var m=35;
 
+    var time=new Date();
+    var arr=[];
+    for(var i=0;i<n;i++){
+      arr.push(fib(m));
+    }
 
-  var time=new Date();
-  var arr=[];
-  for(var i=0;i<1;i++){
-    arr.push(fib(35));
-  }
+    console.log("Single Threaded: "+parseInt(new Date()-time));
 
-  console.log("Single Threaded: "+parseInt(new Date()-time));
+    //Interface
 
-  //Interface
+    var threadPool=new ThreadPool();
 
-  var time=new Date();
+    var time=new Date();
 
-  var arr=[];
+    var arr=[];
 
-  for(var i=0;i<10;i++){
-      arr.push(parallel.thread(fib)(35));
-  }
+    for(var i=0;i<n;i++){
+        arr.push(threadPool.addTask(fib,m));
+    }
 
-  Promise.all(arr).then(function(x){
-    console.log("Multi Threaded: "+parseInt(new Date()-time));
-  });
-
-
-
-  /*
-  var n=300;
-
-  var arr=[];
-
-  var time=new Date();
-
-  for(var i=0;i<n;i++){
-    arr.push(i*i);
-  }
-  console.log(arr);
-
-  console.log(new Date()-time);
-
-
-//Parallel
-
-  var time=new Date();
-
-  var arr=[];
-  for(var i=0;i<n;i++){
-    arr.push(thread(squared)(i))
-  }
-
-
-  Promise.all(arr).then(function(result){
-    console.log(result);
-
-    console.log(new Date()-time);
-  });
+    Promise.all(arr).then(function(x){
+      console.log("Multi Threaded: "+parseInt(new Date()-time));
+      threadPool.kill();
+    });
 
 
 
-  */
-  function squared(x){
-    postMessage(x*x);
-  }
 </script>
