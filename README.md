@@ -12,13 +12,30 @@ Easy Concurrency using Promises and Threads
 
 
 ## Usage
+Spawn a Thread
+```
 
-Make an array of all squared values from 1->100
+
+
+var test=thread(squared);
+
+test(9).then(function(x){
+  console.log(x);
+});
+
+
+function squared(x){
+  postMessage(x*x);
+}
+```
+
+
+Example: Make an array of all squared values from 1->100
 
 ```
 var arr=[];
   for(var i=0;i<100;i++){
-    arr.push(thread(squared)(i))
+    arr.push(thread(squared)(i));
   }
 
 
@@ -28,7 +45,7 @@ Promise.all(arr).then(function(result){
 
 
 function squared(x){
-  return a*b;
+  postMessage(x*x);
 }
 
 

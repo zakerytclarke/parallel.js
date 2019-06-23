@@ -1,0 +1,76 @@
+<script src="thread.js"></script>
+<script>
+
+
+  function fib(n){
+    if(n<=1){
+      return 1;
+    }
+    return fib(n-1)+fib(n-2);
+  }
+
+
+  var n=10;
+
+  var time=new Date();
+  var arr=[];
+  for(var i=0;i<n;i++){
+    arr.push(fib(35));
+  }
+
+  console.log("Single Threaded: "+parseInt(new Date()-time));
+
+  //Interface
+
+  var time=new Date();
+
+  var arr=[];
+
+  for(var i=0;i<n;i++){
+      arr.push(parallel.thread(fib)(35));
+  }
+
+  Promise.all(arr).then(function(x){
+    console.log("Multi Threaded: "+parseInt(new Date()-time));
+  });
+
+
+
+  /*
+  var n=300;
+
+  var arr=[];
+
+  var time=new Date();
+
+  for(var i=0;i<n;i++){
+    arr.push(i*i);
+  }
+  console.log(arr);
+
+  console.log(new Date()-time);
+
+
+//Parallel
+
+  var time=new Date();
+
+  var arr=[];
+  for(var i=0;i<n;i++){
+    arr.push(thread(squared)(i))
+  }
+
+
+  Promise.all(arr).then(function(result){
+    console.log(result);
+
+    console.log(new Date()-time);
+  });
+
+
+
+  */
+  function squared(x){
+    postMessage(x*x);
+  }
+</script>
